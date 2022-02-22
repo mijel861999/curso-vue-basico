@@ -8,10 +8,48 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  
-  <div id="app">
-    <img v-bind:src="img" v-bind:alt="name">
-    <h1>{{ name }}</h1>
+  <div id="app" v-bind:style="{ background: '#' + color }">
+    <img 
+      v-on:mouseover="toggleShowPrices" 
+      v-on:mouseout="toggleShowPrices"
+      v-bind:src="img" 
+      v-bind:alt="name"
+    >
+    <h1 v-bind:class="changePercent > 0 ? 'green' : 'red'">
+      {{ name }} 
+      <span v-if="changePercent > 0">:)</span>
+      <span v-else-if="changePercent < 0">:(</span>
+      <span v-else>uwu</span>
+
+      <br>
+
+      <span v-show="changePercent > 0">:)</span>
+      <span v-show="changePercent < 0">:(</span>
+      <span v-show="changePercent === 0">uwu</span>
+
+      <br> 
+    </h1>
+    
+
+    <!-- <ul>
+        <li v-for="(p, i) in prices" v-bind:key="p">
+          {{ i }}: {{ p}}
+        </li>
+      </ul> -->
+
+    
+    <span v-on:click="toggleShowPrices">{{ showPrices ? 'Ocultar precios' : 'Ver Precios' }}</span>
+
+    <ul v-show="showPrices">
+      <li 
+        v-bind:class="{ orange: p.value === price, red: p.value < price, green : p.value > price }"
+        v-for="p in pricesWithDays" 
+        v-bind:key="p.value"
+        key="p.day"
+      >
+        {{ p.day }}
+      </li>
+    </ul>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
